@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="PerformanceManagementSystem.Api/PerformanceManagementSystem.Api.csproj" />
+  <Project Path="PerformanceManagementSystem.Tests/PerformanceManagementSystem.Tests.csproj" />
+</Solution>
