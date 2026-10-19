@@ -42,6 +42,14 @@ public class EmployeesController : ControllerBase
     {
         var employee = await _employeeService.CreateEmployeeAsync(dto);
 
+        if (employee is null)
+        {
+            return BadRequest(new
+            {
+                message = $"Department with ID {dto.DepartmentId} does not exist."
+            });
+        }
+
         return CreatedAtAction(
             nameof(GetEmployeeById),
             new { id = employee.Id },

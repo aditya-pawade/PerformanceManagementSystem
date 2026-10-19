@@ -1,4 +1,3 @@
-
 using PerformanceManagementSystem.Api.DTOs;
 
 namespace PerformanceManagementSystem.Api.Services.Interfaces;
@@ -9,6 +8,5 @@ public interface IEmployeeService
 
     Task<EmployeeResponseDto?> GetEmployeeByIdAsync(int id);
 
-    Task<EmployeeResponseDto> CreateEmployeeAsync(
-        CreateEmployeeDto dto);
+    Task<EmployeeResponseDto?> CreateEmployeeAsync(CreateEmployeeDto dto);
 }

@@ -53,34 +53,41 @@ public class EmployeeService : IEmployeeService
 			.FirstOrDefaultAsync();
 	}
 
-	public async Task<EmployeeResponseDto> CreateEmployeeAsync(
-		CreateEmployeeDto dto)
-	{
-		var employee = new Employee
-		{
-			FirstName = dto.FirstName,
-			LastName = dto.LastName,
-			Email = dto.Email,
-			JobTitle = dto.JobTitle,
-			DepartmentId = dto.DepartmentId,
-			DateJoined = dto.DateJoined,
-			IsActive = true
-		};
+    public async Task<EmployeeResponseDto?> CreateEmployeeAsync(
+    CreateEmployeeDto dto)
+    {
+        var departmentExists = await _context.Departments
+            .AnyAsync(department => department.Id == dto.DepartmentId);
 
-		_context.Employees.Add(employee);
+        if (!departmentExists)
+        {
+            return null;
+        }
 
-		await _context.SaveChangesAsync();
+        var employee = new Employee
+        {
+            FirstName = dto.FirstName,
+            LastName = dto.LastName,
+            Email = dto.Email,
+            JobTitle = dto.JobTitle,
+            DepartmentId = dto.DepartmentId,
+            DateJoined = dto.DateJoined,
+            IsActive = true
+        };
 
-		return new EmployeeResponseDto
-		{
-			Id = employee.Id,
-			FirstName = employee.FirstName,
-			LastName = employee.LastName,
-			Email = employee.Email,
-			JobTitle = employee.JobTitle,
-			DepartmentId = employee.DepartmentId,
-			DateJoined = employee.DateJoined,
-			IsActive = employee.IsActive
-		};
-	}
+        _context.Employees.Add(employee);
+        await _context.SaveChangesAsync();
+
+        return new EmployeeResponseDto
+        {
+            Id = employee.Id,
+            FirstName = employee.FirstName,
+            LastName = employee.LastName,
+            Email = employee.Email,
+            JobTitle = employee.JobTitle,
+            DepartmentId = employee.DepartmentId,
+            DateJoined = employee.DateJoined,
+            IsActive = employee.IsActive
+        };
+    }
 }
